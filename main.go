@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -24,6 +25,12 @@ func main() {
 
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	links := extractLink(doc)
+
+	for i, link := range links {
+		fmt.Printf("Link %d: Href=%s, Text=%s\n", i, link.Href, link.Text)
 	}
 
 }
