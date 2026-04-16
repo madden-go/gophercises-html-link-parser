@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
@@ -62,4 +64,21 @@ func extractLink(n *html.Node) []Link {
 
 	traverse(n)
 	return links
+}
+
+func getText(n *html.Node) string {
+	var buf bytes.Buffer
+
+	var collect func(*html.Node)
+	collect = func(node *html.Node) {
+		if node.Type == html.TextNode {
+			buf.WriteString(node.Data)
+		}
+		for child := node.FirstChild; child != nil; child.NextSibling {
+			collect(child)
+		}
+	}
+
+	collect(n)
+	return strings.TrimSpace(buf.String())
 }
