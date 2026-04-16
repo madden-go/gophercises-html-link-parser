@@ -17,7 +17,7 @@ type Link struct {
 }
 
 func main() {
-	file, err := os.Open("./tests-html/ex1.html")
+	file, err := os.Open("./tests-html/ex4.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,7 +57,7 @@ func extractLink(n *html.Node) []Link {
 			links = append(links, link)
 		}
 
-		for child := node.FirstChild; child != nil; child.NextSibling {
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
 			traverse(child)
 		}
 	}
@@ -74,7 +74,7 @@ func getText(n *html.Node) string {
 		if node.Type == html.TextNode {
 			buf.WriteString(node.Data)
 		}
-		for child := node.FirstChild; child != nil; child.NextSibling {
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
 			collect(child)
 		}
 	}
